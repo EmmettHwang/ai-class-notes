@@ -206,20 +206,30 @@ cv2.destroyAllWindows()
 
 ### 6-3. 한 줄씩 풀이
 
-| 코드 | 쉬운 말로 |
-|---|---|
-| `import cv2` | 카메라·사진 도구(OpenCV)를 꺼내 온다 |
-| `from ultralytics import YOLO` | 물체 찾는 AI(YOLO)를 꺼내 온다 |
-| `model = YOLO("yolo26n.pt")` | AI 의 「뇌」 파일을 읽는다. 처음엔 인터넷에서 받아 온다(약 5MB) |
-| `cap = cv2.VideoCapture(0)` | 0번 카메라를 켠다. `cap` 은 카메라를 부르는 이름 |
-| `while cap.isOpened():` | 카메라가 켜져 있는 동안 아래를 **계속 되풀이** |
-| `ok, frame = cap.read()` | 사진 한 장(프레임)을 찍어 `frame` 에 담는다 |
-| `if not ok: break` | 못 찍었으면 되풀이를 그만둔다 |
-| `results = model(frame)` | AI 에게 사진을 보여 주고 답을 받는다 |
-| `annotated = results[0].plot()` | 답을 사진 위에 상자·이름·숫자로 그린다 |
-| `cv2.imshow("YOLO", annotated)` | 그린 사진을 창에 보여 준다. 빨리 되풀이하니 **영상처럼** 보인다 |
-| `cv2.waitKey(1) … ord("q")` | q 키를 눌렀는지 본다. 눌렀으면 그만 |
-| `cap.release()` / `cv2.destroyAllWindows()` | 카메라를 끄고 창을 닫는다(뒷정리) |
+- `import cv2`  
+  → 카메라·사진 도구(OpenCV)를 꺼내 온다
+- `from ultralytics import YOLO`  
+  → 물체 찾는 AI(YOLO)를 꺼내 온다
+- `model = YOLO("yolo26n.pt")`  
+  → AI 의 「뇌」 파일을 읽는다. 처음엔 인터넷에서 받아 온다(약 5MB)
+- `cap = cv2.VideoCapture(0)`  
+  → 0번 카메라를 켠다. `cap` 은 카메라를 부르는 이름
+- `while cap.isOpened():`  
+  → 카메라가 켜져 있는 동안 아래를 **계속 되풀이**
+- `ok, frame = cap.read()`  
+  → 사진 한 장(프레임)을 찍어 `frame` 에 담는다
+- `if not ok: break`  
+  → 못 찍었으면 되풀이를 그만둔다
+- `results = model(frame)`  
+  → AI 에게 사진을 보여 주고 답을 받는다
+- `annotated = results[0].plot()`  
+  → 답을 사진 위에 상자·이름·숫자로 그린다
+- `cv2.imshow("YOLO", annotated)`  
+  → 그린 사진을 창에 보여 준다. 빨리 되풀이하니 **영상처럼** 보인다
+- `cv2.waitKey(1) … ord("q")`  
+  → q 키를 눌렀는지 본다. 눌렀으면 그만
+- `cap.release()` / `cv2.destroyAllWindows()`  
+  → 카메라를 끄고 창을 닫는다(뒷정리)
 
 > 💡 상자 옆 숫자(예: `person 0.87`)는 **신뢰도** — AI 가 「87% 정도 사람이 맞다」고 믿는다는 뜻입니다.
 
@@ -322,17 +332,24 @@ if __name__ == "__main__":
 
 ### 7-4. 한 줄씩 풀이 (1부와 다른 곳만)
 
-| 코드 | 쉬운 말로 |
-|---|---|
-| `app = Flask(__name__)` | 작은 웹사이트(웹앱)를 하나 만든다 |
-| `PAGE = """…"""` | 첫 화면 글. `<img src="/video">` 는 「/video 주소에서 그림을 받아 와 보여 줘」라는 뜻 |
-| `def frames():` | 사진을 끝없이 만들어 내는 함수 |
-| `cv2.imencode(".jpg", …)` | 사진을 JPG 파일 모양으로 바꾼다(브라우저는 JPG 를 알아본다) |
-| `yield …` | 사진 한 장을 내보내고, 다음 사진을 만들러 다시 위로 간다 |
-| `@app.route("/")` | 「첫 화면 주소로 오면 아래 함수를 실행해」라는 표시 |
-| `@app.route("/video")` | 「/video 주소로 오면 아래 함수를 실행해」 |
-| `Response(…, mimetype="multipart/x-mixed-replace…")` | 사진을 **갈아 끼우며 계속** 보내라는 뜻. 브라우저는 이걸 영상처럼 보여 준다(MJPEG) |
-| `app.run(host="127.0.0.1", port=5000)` | 내 컴퓨터의 5000번 문으로 웹앱을 켠다 |
+- `app = Flask(__name__)`  
+  → 작은 웹사이트(웹앱)를 하나 만든다
+- `PAGE = """…"""`  
+  → 첫 화면 글. `<img src="/video">` 는 「/video 주소에서 그림을 받아 와 보여 줘」라는 뜻
+- `def frames():`  
+  → 사진을 끝없이 만들어 내는 함수
+- `cv2.imencode(".jpg", …)`  
+  → 사진을 JPG 파일 모양으로 바꾼다(브라우저는 JPG 를 알아본다)
+- `yield …`  
+  → 사진 한 장을 내보내고, 다음 사진을 만들러 다시 위로 간다
+- `@app.route("/")`  
+  → 「첫 화면 주소로 오면 아래 함수를 실행해」라는 표시
+- `@app.route("/video")`  
+  → 「/video 주소로 오면 아래 함수를 실행해」
+- `Response(…, mimetype="multipart/x-mixed-replace…")`  
+  → 사진을 **갈아 끼우며 계속** 보내라는 뜻. 브라우저는 이걸 영상처럼 보여 준다(MJPEG)
+- `app.run(host="127.0.0.1", port=5000)`  
+  → 내 컴퓨터의 5000번 문으로 웹앱을 켠다
 
 ### 7-5. 실행하고 보기
 
