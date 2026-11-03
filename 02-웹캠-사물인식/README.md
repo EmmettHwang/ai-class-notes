@@ -166,6 +166,10 @@ pip install ultralytics opencv-python
 
 ---
 
+### 4-7 우리는 github에 있는 코드를 가져다 사용할 것임 
+'''
+git clone https://github.com/EmmettHwang/ai-class-notes.git
+'''
 ## 5. Copilot Chat 쓰는 법 (아주 짧게)
 
 1. **Ctrl + Alt + I** 를 누르면 오른쪽에 **Chat(채팅)** 창이 열립니다. (또는 위쪽 가운데 Copilot 아이콘)
