@@ -45,7 +45,8 @@
 | 무엇 | 설명 |
 |---|---|
 | 노트북(웹캠 달린 것) | 웹캠이 없으면 USB 웹캠을 꽂습니다 |
-| Python 3.10 ~ 3.12 | 파이썬 프로그램. [python.org](https://www.python.org/downloads/) 에서 받습니다. 설치 첫 화면에서 **「Add python.exe to PATH」 칸을 꼭 체크**합니다 |
+| Anaconda 또는 Miniconda **(추천)** | 파이썬과 「가상환경 상자」를 함께 관리하는 프로그램. [anaconda.com/download](https://www.anaconda.com/download) — 이게 있으면 아래 Python 은 따로 안 깔아도 됩니다 |
+| (conda 가 없으면) Python 3.10 ~ 3.12 | 파이썬 프로그램. [python.org](https://www.python.org/downloads/) 에서 받습니다. 설치 첫 화면에서 **「Add python.exe to PATH」 칸을 꼭 체크**합니다 |
 | VS Code | 코드를 쓰는 프로그램. [code.visualstudio.com](https://code.visualstudio.com/) |
 | GitHub Copilot 확장 | VS Code 안에서 코드를 같이 써 주는 AI. GitHub 계정으로 로그인합니다(학생은 [GitHub Education](https://education.github.com/) 으로 무료) |
 | Python 확장 | VS Code 왼쪽 「확장(블록 4개 모양)」에서 `Python` 검색 → 설치 |
@@ -90,11 +91,37 @@
 - VS Code 위쪽 메뉴 **Terminal(터미널)** → **New Terminal(새 터미널)**. (단축키 `` Ctrl + ` `` — 숫자 1 왼쪽 키)
 - 아래쪽에 `PS C:\Users\...\yolo-webcam>` 같은 줄이 보이면 성공입니다.
 
-### 4-4. 가상환경(venv) 만들고 켜기
+### 4-4. 가상환경 만들고 켜기
 
 가상환경 = 이 수업용 도구만 따로 담아 두는 **작은 상자**입니다. 다른 수업 도구와 섞이지 않습니다.
 
-터미널에 한 줄씩 적고 Enter 를 누릅니다.
+> ⚠ **왜 꼭 상자를 만드나요?** 상자 없이 `pip install` 하면 도구가 컴퓨터 전체에 깔려, 다른 수업·프로그램의 도구와 판이 섞이고 꼬입니다(「어제는 됐는데 오늘은 안 돼요」의 흔한 원인). 상자 안에 깔면 **이 수업 것만** 따로 있고, 필요 없어지면 상자째 지우면 깨끗해집니다.
+두 방법 중 **하나만** 하면 됩니다. 컴퓨터에 **Anaconda(또는 Miniconda)** 가 깔려 있으면 **방법 A(conda)** 를 씁니다.
+
+#### 방법 A — conda (추천)
+
+1. 시작 메뉴에서 **Anaconda Prompt** 를 엽니다(VS Code 터미널에서 `conda` 가 안 먹으면 이쪽에서 합니다).
+2. 한 줄씩 적고 Enter 를 누릅니다.
+
+```bat
+:: yolo 라는 이름의 상자를 파이썬 3.11 로 만든다 (중간에 Proceed ([y]/n)? 가 나오면 y)
+conda create -n yolo python=3.11
+:: 그 상자 안으로 들어간다
+conda activate yolo
+:: 오늘 쓸 도구를 상자 안에 깐다
+pip install ultralytics opencv-python flask
+```
+
+- 줄 맨 앞이 `(base)` 에서 `(yolo)` 로 바뀌면 상자 안에 들어온 것입니다.
+- **VS Code 에서 이 상자 쓰기**: `Ctrl + Shift + P` → `Python: Select Interpreter` → 목록에서 **`yolo` (conda)** 를 고릅니다. 오른쪽 아래 상태 줄에 `yolo` 가 보이면 됩니다.
+- VS Code 터미널에서 `conda` 를 모른다고 나오면 Anaconda Prompt 에서 `conda init` 를 한 번 하고 VS Code 를 다시 엽니다.
+- 다음 시간에 다시 할 때는 만들기 없이 `conda activate yolo` 만 하면 됩니다.
+- 다 쓰고 지우고 싶으면 `conda deactivate` → `conda env remove -n yolo` — 컴퓨터는 깔기 전 그대로입니다.
+- conda 로 했으면 아래 4-5 는 이미 끝난 것입니다(위 `pip install` 줄). 바로 **4-6** 으로 갑니다.
+
+#### 방법 B — venv (Anaconda 가 없을 때)
+
+파이썬만 깔려 있으면 됩니다. 터미널에 한 줄씩 적고 Enter 를 누릅니다.
 
 ```powershell
 python -m venv venv
@@ -382,7 +409,7 @@ if __name__ == "__main__":
 | `cv2.imshow` 창이 안 뜸 / `The function is not implemented` | `opencv-python-headless`(창 없는 판)가 깔려 있음 | `pip uninstall opencv-python-headless opencv-python` → `pip install opencv-python` |
 | 창이 떴는데 q 가 안 먹음 | 창이 아니라 다른 곳이 눌린 상태 | 영상 창을 한 번 클릭하고 q |
 | 첫 실행 때 오래 멈춘 것 같음 | AI 모델 파일(`yolo26n.pt`)을 받는 중 | 인터넷 연결을 확인하고 기다린다. 한 번 받으면 다음부터는 바로 켜진다 |
-| `ModuleNotFoundError: No module named 'cv2'`(또는 ultralytics, flask) | 가상환경 밖에서 실행했거나 안 깔림 | 줄 앞에 `(venv)` 가 있는지 보고, 없으면 `venv\Scripts\activate` 후 `pip install …` |
+| `ModuleNotFoundError: No module named 'cv2'`(또는 ultralytics, flask) | 가상환경 밖에서 실행했거나 안 깔림 | 줄 앞에 `(yolo)`(conda) 또는 `(venv)` 가 있는지 보고, 없으면 `conda activate yolo`(또는 `venv\Scripts\activate`) 후 `pip install …`. VS Code 오른쪽 아래 인터프리터가 그 상자인지도 확인 |
 | 영상이 뚝뚝 끊김(느림) | 노트북이 AI 계산을 버거워함 | 가장 작은 모델 `yolo26n.pt` 를 쓰고, `model(frame, imgsz=320)` 처럼 **사진 크기를 줄인다** |
 | 웹앱 주소가 안 열림 | 프로그램이 꺼졌거나 주소를 잘못 적음 | 터미널에 `Running on http://127.0.0.1:5000` 이 있는지 보고 주소를 그대로 적는다 |
 | `Address already in use` | 앞서 켠 웹앱이 아직 켜져 있음 | 그 터미널에서 Ctrl + C 로 끄거나 `port=5001` 로 바꾼다 |
