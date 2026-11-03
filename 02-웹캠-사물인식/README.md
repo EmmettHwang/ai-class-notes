@@ -45,7 +45,7 @@
 | 무엇 | 설명 |
 |---|---|
 | 노트북(웹캠 달린 것) | 웹캠이 없으면 USB 웹캠을 꽂습니다 |
-| Anaconda 또는 Miniconda **(추천)** | 파이썬과 「가상환경 상자」를 함께 관리하는 프로그램. [anaconda.com/download](https://www.anaconda.com/download) — 이게 있으면 아래 Python 은 따로 안 깔아도 됩니다 |
+| Miniconda **(추천)** | 「가상환경 상자」를 만들어 주는 작은 프로그램. [Miniconda 받기](https://www.anaconda.com/download/success) — 이게 있으면 아래 Python 은 따로 안 깔아도 됩니다 |
 | (conda 가 없으면) Python 3.10 ~ 3.12 | 파이썬 프로그램. [python.org](https://www.python.org/downloads/) 에서 받습니다. 설치 첫 화면에서 **「Add python.exe to PATH」 칸을 꼭 체크**합니다 |
 | VS Code | 코드를 쓰는 프로그램. [code.visualstudio.com](https://code.visualstudio.com/) |
 | GitHub Copilot 확장 | VS Code 안에서 코드를 같이 써 주는 AI. GitHub 계정으로 로그인합니다(학생은 [GitHub Education](https://education.github.com/) 으로 무료) |
@@ -96,11 +96,13 @@
 가상환경 = 이 수업용 도구만 따로 담아 두는 **작은 상자**입니다. 다른 수업 도구와 섞이지 않습니다.
 
 > ⚠ **왜 꼭 상자를 만드나요?** 상자 없이 `pip install` 하면 도구가 컴퓨터 전체에 깔려, 다른 수업·프로그램의 도구와 판이 섞이고 꼬입니다(「어제는 됐는데 오늘은 안 돼요」의 흔한 원인). 상자 안에 깔면 **이 수업 것만** 따로 있고, 필요 없어지면 상자째 지우면 깨끗해집니다.
-두 방법 중 **하나만** 하면 됩니다. 컴퓨터에 **Anaconda(또는 Miniconda)** 가 깔려 있으면 **방법 A(conda)** 를 씁니다.
+두 방법 중 **하나만** 하면 됩니다. **Miniconda** 가 깔려 있으면 **방법 A** 를 씁니다.
 
-#### 방법 A — conda (추천)
+> 💡 우리 수업 약속: **conda 는 상자 만들기에만** 쓰고, 도구 깔기는 전부 **`pip install`** 로 합니다(`conda install` 은 쓰지 않습니다).
 
-1. 시작 메뉴에서 **Anaconda Prompt** 를 엽니다(VS Code 터미널에서 `conda` 가 안 먹으면 이쪽에서 합니다).
+#### 방법 A — Miniconda 로 상자 만들기 (추천)
+
+1. 시작 메뉴에서 **Anaconda Prompt (miniconda3)** 를 엽니다(VS Code 터미널에서 `conda` 가 안 먹으면 이쪽에서 합니다).
 2. 한 줄씩 적고 Enter 를 누릅니다.
 
 ```bat
@@ -108,18 +110,18 @@
 conda create -n yolo python=3.11
 :: 그 상자 안으로 들어간다
 conda activate yolo
-:: 오늘 쓸 도구를 상자 안에 깐다
+:: 오늘 쓸 도구를 상자 안에 pip 로 깐다
 pip install ultralytics opencv-python flask
 ```
 
 - 줄 맨 앞이 `(base)` 에서 `(yolo)` 로 바뀌면 상자 안에 들어온 것입니다.
 - **VS Code 에서 이 상자 쓰기**: `Ctrl + Shift + P` → `Python: Select Interpreter` → 목록에서 **`yolo` (conda)** 를 고릅니다. 오른쪽 아래 상태 줄에 `yolo` 가 보이면 됩니다.
-- VS Code 터미널에서 `conda` 를 모른다고 나오면 Anaconda Prompt 에서 `conda init` 를 한 번 하고 VS Code 를 다시 엽니다.
+- VS Code 터미널에서 `conda` 를 모른다고 나오면 Anaconda Prompt (miniconda3) 에서 `conda init` 를 한 번 하고 VS Code 를 다시 엽니다.
 - 다음 시간에 다시 할 때는 만들기 없이 `conda activate yolo` 만 하면 됩니다.
 - 다 쓰고 지우고 싶으면 `conda deactivate` → `conda env remove -n yolo` — 컴퓨터는 깔기 전 그대로입니다.
-- conda 로 했으면 아래 4-5 는 이미 끝난 것입니다(위 `pip install` 줄). 바로 **4-6** 으로 갑니다.
+- 방법 A 로 했으면 아래 4-5 는 이미 끝난 것입니다(위 `pip install` 줄). 바로 **4-6** 으로 갑니다.
 
-#### 방법 B — venv (Anaconda 가 없을 때)
+#### 방법 B — venv (Miniconda 가 없을 때)
 
 파이썬만 깔려 있으면 됩니다. 터미널에 한 줄씩 적고 Enter 를 누릅니다.
 
